@@ -12,7 +12,8 @@ public class Tester {
         Menu menu = new Menu();
         menu.add("1. Add New Student");
         menu.add("2. Print out Student List");
-        menu.add("3. Quit!");
+        menu.add("3. Update Student");
+        menu.add("4. Quit!");
         int userChoice;
         do {
             System.out.println("STUDENT MANAGEMENT");
@@ -23,7 +24,8 @@ public class Tester {
             switch (userChoice) {
                 case 1 -> stu.addStudent();
                 case 2 -> stu.printStudent();
-                case 3 -> System.out.println("Thank you!");
+                case 3 -> stu.updateStudent();
+                case 4 -> System.out.println("Thank you!");
                 default -> System.out.println("Try again!");
             }
         } while (userChoice > 0 && userChoice != menu.size());

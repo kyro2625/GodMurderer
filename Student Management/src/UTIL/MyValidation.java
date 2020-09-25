@@ -1,12 +1,17 @@
 package UTIL;
 
+import DAO.StudentList;
 import DTO.Student;
 import DTO.Subject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
-public class MyValidation {
+
+public class MyValidation extends ArrayList<Student> {
+    public MyValidation() {
+        super();
+    }
     private final static Scanner sc = new Scanner(System.in);
 
     public static String checkInputString() {
@@ -40,15 +45,6 @@ public class MyValidation {
         return true;
     }
 
-    //    public boolean checkIDSubject(String id, ArrayList list) {
-//        for (Object object : list) {
-//            if (Object instanceof Subject) {
-//                if (((Subject) object).getId().equals(id)) ;
-//                return false;
-//            }
-//        }
-//        return true;
-//    }
     public static boolean checkIdExist(ArrayList<Student> ls, String id, String name) {
         for (Student student : ls) {
             if (id.equalsIgnoreCase(student.getId())
@@ -58,6 +54,7 @@ public class MyValidation {
         }
         return true;
     }
+
     //check student exist
     public static boolean checkStudentExist(ArrayList<Student> ls, String id,
                                             String studentName, String lastName, String firstName) {
@@ -71,5 +68,15 @@ public class MyValidation {
             }
         }
         return true;
+    }
+
+    public static int findStudent(ArrayList<Student> ls, String id) {
+
+        for (int i = 0; i <= ls.size(); i++) {
+            if (ls.get(i).getId().contains(id)) {
+                return i;
+            }
+        }
+        return -1;
     }
 }

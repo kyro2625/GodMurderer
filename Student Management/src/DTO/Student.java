@@ -15,7 +15,7 @@ public class Student {
     private String gender;
     private String DoB;
     private String email;
-    private String password;
+    private String phoneNumber;
     //   private boolean canDelete = true;
     transient int i;
     //    private StudentList stulist;
@@ -31,11 +31,11 @@ public class Student {
                 ", gender='" + gender + '\'' +
                 ", DoB=" + DoB +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
                 '}';
     }
 
-    public Student(String id, String name, String firstName, String lastName, String gender, String doB, String email, String password) {
+    public Student(String id, String name, String firstName, String lastName, String gender, String doB, String email, String phoneNumber) {
         this.id = id;
         this.name = name;
         this.firstName = firstName;
@@ -43,7 +43,7 @@ public class Student {
         this.gender = gender;
         this.DoB = doB;
         this.email = email;
-        this.password = password;
+        this.phoneNumber = phoneNumber;
     }
     public void print() {
 
@@ -105,12 +105,12 @@ public class Student {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public void input() {
