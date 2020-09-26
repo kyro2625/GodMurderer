@@ -1,6 +1,5 @@
 package UTIL;
 
-import DAO.StudentList;
 import DTO.Student;
 import DTO.Subject;
 
@@ -27,11 +26,49 @@ public class MyValidation extends ArrayList<Student> {
         }
     }
 
-    public static boolean checkNumber(int number, int min, int max) {
-        if ((number >= min) && (number <= max)) return true;
-        return false;
+    public static int checkInputNumber() {
+        while (true) {
+            int result = Integer.parseInt(sc.nextLine());
+            if (result<=0 || result >30) {
+                System.err.println("Field Should Not Exceed Below 0 and Above 30");
+                System.out.print("\nEnter again: ");
+            } else {
+                return result;
+            }
+        }
     }
 
+    public static String checkPhoneNumber() {
+       while (true) {
+           String result = sc.nextLine().trim();
+           boolean matched = result.matches("^\\d{10,12}$");
+
+           if(result.isEmpty()) {
+               System.err.println("Field Should Not Empty");
+               System.out.print("\nEnter again: ");
+           } else if (!matched) {
+               System.out.print("Wrong format. Please enter again: ");
+           } else {
+               return result;
+           }
+       }
+    }
+
+    public static String checkEmail() {
+        while (true) {
+            String result = sc.nextLine().trim();
+            boolean matched = result.matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$");
+
+            if(result.isEmpty()) {
+                System.err.println("Field Should Not Empty");
+                System.out.print("\nEnter again: ");
+            } else if (!matched) {
+                System.out.print("Wrong format. Please enter again: ");
+            } else {
+                return result;
+            }
+        }
+    }
     public static boolean checkDate(String DoB) {
         final String DATE_FORMAT = "dd/MM/yyyy";
         try {
@@ -40,28 +77,16 @@ public class MyValidation extends ArrayList<Student> {
             df.parse(DoB); // parse dateString thành kiểu Date
         } catch (Exception e) { // quăng lỗi nếu dateString ko hợp lệ
             System.out.println("Invalid date");
-            return false;
+            return true;
         }
-        return true;
-    }
-
-    public static boolean checkIdExist(ArrayList<Student> ls, String id, String name) {
-        for (Student student : ls) {
-            if (id.equalsIgnoreCase(student.getId())
-                    && !name.equalsIgnoreCase(student.getName())) {
-                return false;
-            }
-        }
-        return true;
+        return false;
     }
 
     //check student exist
     public static boolean checkStudentExist(ArrayList<Student> ls, String id,
-                                            String studentName, String lastName, String firstName) {
-        int size = ls.size();
+                                            String lastName, String firstName) {
         for (Student student : ls) {
             if (id.equalsIgnoreCase(student.getId())
-                    && studentName.equalsIgnoreCase(student.getName())
                     && lastName.equalsIgnoreCase(student.getLastName())
                     && firstName.equalsIgnoreCase(student.getFirstName())) {
                 return false;
@@ -70,13 +95,15 @@ public class MyValidation extends ArrayList<Student> {
         return true;
     }
 
-    public static int findStudent(ArrayList<Student> ls, String id) {
-
-        for (int i = 0; i <= ls.size(); i++) {
-            if (ls.get(i).getId().contains(id)) {
-                return i;
+    public static boolean checkSubjectExist(ArrayList<Subject> ls, String id,
+                                            String name, int credit) {
+        for (Subject subject : ls) {
+            if (id.equalsIgnoreCase(subject.getId())
+                    && name.equalsIgnoreCase(subject.getName())
+                    && (credit == subject.getCredit())) {
+                return false;
             }
         }
-        return -1;
+        return true;
     }
 }
