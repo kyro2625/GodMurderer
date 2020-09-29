@@ -1,12 +1,12 @@
 package DTO;
 
 public class Grade {
-    Student std;
+    Student stu;
     Subject sub;
     double lab, progressTest, finalExam;
 
-    public Grade(Student std, Subject sub, double lab, double pr, double progressTest, double finalExam) {
-        this.std = std;
+    public Grade(Student stu, Subject sub, double lab, double progressTest, double finalExam) {
+        this.stu = stu;
         this.sub = sub;
         this.lab = lab;
         this.progressTest = progressTest;
@@ -17,12 +17,12 @@ public class Grade {
         return (0.3 * lab + 0.3 * progressTest + 0.4 * finalExam);
     }
 
-    public Student getStd() {
-        return std;
+    public Student getStu() {
+        return stu;
     }
 
-    public void setStd(Student std) {
-        this.std = std;
+    public void setStu(Student stu) {
+        this.stu = stu;
     }
 
     public Subject getSub() {

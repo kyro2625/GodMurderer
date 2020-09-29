@@ -1,5 +1,6 @@
 package GUI;
 
+import DAO.GradeList;
 import DAO.StudentList;
 import DAO.SubjectList;
 
@@ -7,6 +8,7 @@ public class Tester {
     public static void main(String[] args) {
         StudentList stu = new StudentList();
         SubjectList sub = new SubjectList();
+        GradeList gra = new GradeList();
         Menu menu = new Menu();
         menu.add("1. Add New Student");
         menu.add("2. Update Student Information");
@@ -32,8 +34,8 @@ public class Tester {
                 case 4 -> sub.addSubject();
                 case 5 -> sub.updateSubject();
                 case 6 -> sub.removeSubject();
-                case 7 -> sub.printSubject();
-                case 8 -> stu.printStudent();
+                case 7 -> gra.addNewGrade();
+                case 8 -> gra.printStudentReport();
                 case 10 -> System.out.println("Thank you!");
                 default -> System.out.println("Try again!");
             }
