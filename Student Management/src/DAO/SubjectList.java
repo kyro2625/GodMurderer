@@ -16,9 +16,6 @@ public class SubjectList extends ArrayList<Subject> {
 
     private boolean confirmation(String c) {
         boolean t = true;
-        if (c.equalsIgnoreCase("Y")) {
-            t = true;
-        }
         if (c.equalsIgnoreCase("N")) {
             t = false;
         }
@@ -79,7 +76,7 @@ public class SubjectList extends ArrayList<Subject> {
                         credit = MyValidation.checkInputNumber();
                         break;
                     } catch (Exception e) {
-                        System.out.println("Wrong input format, please try again!");
+                        System.out.println("    Wrong input format, please try again!");
                     }
                 }
                 if (MyValidation.checkSubjectExist(Sublist, id, name, credit)) {
@@ -124,9 +121,9 @@ public class SubjectList extends ArrayList<Subject> {
                 }
                 if (pos >= 0) {
                     String oldName = this.get(pos).getName();
-                    System.out.print("Old name: " + oldName + ", new name: ");
-                    String newName = MyValidation.checkInputString();
-                    this.get(pos).setName(newName);
+                    System.out.print("Old subject name: " + oldName + ", new subject name: ");
+                    String newName = sc.nextLine();
+                    if (!newName.equals("")) this.get(pos).setName(newName);
 
                     int oldCredit = this.get(pos).getCredit();
                     System.out.print("Old credit: " + oldCredit + ", new: ");
@@ -184,18 +181,6 @@ public class SubjectList extends ArrayList<Subject> {
             } else {
                 System.out.println("Confirmed cancel!");
             }
-        }
-    }
-
-    public void printSubject() {
-        if (this.size() == 0) {
-            System.out.println("Empty List.");
-            return;
-        }
-        System.out.println("\nSUBJECT LIST");
-        System.out.println("----------------------------");
-        for (Subject x : this) {
-            System.out.println(x);
         }
     }
 }

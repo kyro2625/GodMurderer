@@ -16,9 +16,6 @@ public class StudentList extends ArrayList<Student> {
 
     private boolean confirmation(String c) {
         boolean t = true;
-        if (c.equalsIgnoreCase("Y")) {
-            t = true;
-        }
         if (c.equalsIgnoreCase("N")) {
             t = false;
         }
@@ -83,11 +80,11 @@ public class StudentList extends ArrayList<Student> {
                 System.out.print("      Enter student last name: ");
                 lastName = MyValidation.checkInputString();
 
-                System.out.print("      Enter student gender: ");
-                gender = sc.nextLine();
+                System.out.print("      Enter student gender (Male/Female): ");
+                gender = MyValidation.checkGender();
 
                 do {
-                    System.out.print("      Enter student Date of Birth: ");
+                    System.out.print("      Enter student Date of Birth (DD/MM/YYYY): ");
                     DoB = sc.nextLine();
                 } while (MyValidation.checkDate(DoB));
 
@@ -145,26 +142,36 @@ public class StudentList extends ArrayList<Student> {
                 if (pos >= 0) {
                     String oldFirstName = this.get(pos).getFirstName();
                     System.out.print("Old first name: " + oldFirstName + ", new first name: ");
-                    String newFirstName = MyValidation.checkInputString();
-                    this.get(pos).setFirstName(newFirstName);
+                    String newFirstName = sc.nextLine();
+                    if (!newFirstName.equals("")) {
+                        this.get(pos).setFirstName(newFirstName);
+                    }
 
                     String oldLastName = this.get(pos).getLastName();
                     System.out.print("Old last name: " + oldLastName + ", new last name: ");
-                    String newLastName = MyValidation.checkInputString();
-                    this.get(pos).setLastName(newLastName);
+                    String newLastName = sc.nextLine();
+                    if (!newLastName.equals("")) {
+                        this.get(pos).setLastName(newLastName);
+                    }
 
                     String oldGender = this.get(pos).getGender();
-                    System.out.print("Old gender: " + oldGender + ", new gender: ");
-                    String newGender = sc.nextLine();
-                    this.get(pos).setGender(newGender);
+                    System.out.print("Old gender: " + oldGender + ", new gender (Male/Female): ");
+                    String newGender = sc.nextLine().toUpperCase();
+                    if (!newGender.equals("")) {
+                        this.get(pos).setGender(newGender);
+                    }
 
                     String oldDoB = this.get(pos).getDoB();
                     String newDoB;
-                    do {
-                        System.out.print("Old Date of Birth: " + oldDoB + ", new Date of Birth: ");
-                        newDoB = sc.nextLine();
-                    } while (MyValidation.checkDate(newDoB));
-                    this.get(pos).setDoB(newDoB);
+                    System.out.print("Old Date of Birth: " + oldDoB + ", new Date of Birth (DD/MM/YYYY): ");
+                    newDoB = sc.nextLine();
+                    if (!newDoB.isEmpty()) {
+                        while (MyValidation.checkDate(newDoB)) {
+                            System.out.print("Wrong input format! Please enter again: ");
+                            newDoB = sc.nextLine();
+                        }
+                        this.get(pos).setDoB(newDoB);
+                    }
 
                     String oldEmail = this.get(pos).getEmail();
                     System.out.print("Old email: " + oldEmail + ", new email: ");
@@ -231,18 +238,6 @@ public class StudentList extends ArrayList<Student> {
             } else {
                 System.out.println("Confirmed cancel!");
             }
-        }
-    }
-
-    public void printStudent() {
-        if (this.size() == 0) {
-            System.out.println("Empty List.");
-            return;
-        }
-        System.out.println("\nSTUDENT LIST");
-        System.out.println("----------------------------");
-        for (Student x : this) {
-            x.print();
         }
     }
 }

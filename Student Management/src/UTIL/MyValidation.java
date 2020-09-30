@@ -26,6 +26,30 @@ public class MyValidation extends ArrayList<Student> {
         }
     }
 
+    public static String checkGender() {
+        String gender = null;
+        boolean valid = true;
+        while (valid){
+            gender = sc.nextLine();
+            if (gender.equalsIgnoreCase("male") || gender.equalsIgnoreCase("female")) {
+                valid = false;
+
+            } else System.out.print("Wrong input format! Please try again: ");
+        }
+        return gender.toUpperCase();
+    }
+
+
+    public static Integer checkInputScore() {
+        while (true) {
+            int result = Integer.parseInt(sc.nextLine());
+            if (result<=0 || result>10) {
+                System.err.println("Field Should Not Exceed Below 0 and Above 10");
+                System.out.print("\nEnter again: ");
+            } else return result;
+        }
+    }
+
     public static int checkInputNumber() {
         while (true) {
             int result = Integer.parseInt(sc.nextLine());
@@ -57,7 +81,7 @@ public class MyValidation extends ArrayList<Student> {
     public static String checkEmail() {
         while (true) {
             String result = sc.nextLine().trim();
-            boolean matched = result.matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$");
+            boolean matched = result.matches("^[\\w-_.+]*[\\w-_.]@([\\w]+\\.)+[\\w]+[\\w]$");
 
             if(result.isEmpty()) {
                 System.err.println("Field Should Not Empty");

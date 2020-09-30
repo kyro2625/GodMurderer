@@ -8,7 +8,7 @@ public class Tester {
     public static void main(String[] args) {
         StudentList stu = new StudentList();
         SubjectList sub = new SubjectList();
-        GradeList gra = new GradeList();
+        GradeList gra = new GradeList(stu, sub);
         Menu menu = new Menu();
         menu.add("1. Add New Student");
         menu.add("2. Update Student Information");
@@ -37,7 +37,7 @@ public class Tester {
                 case 7 -> gra.addNewGrade();
                 case 8 -> gra.printStudentReport();
                 case 9 -> gra.printSubjectReport();
-                case 10 -> System.out.println("Thank you!");
+                case 10 -> System.out.println("Thank you! See you again (￣y▽,￣)╭ ");
                 default -> System.out.println("Try again!");
             }
         } while (userChoice > 0 && userChoice != menu.size());

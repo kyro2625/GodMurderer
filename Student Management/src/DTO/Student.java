@@ -9,19 +9,6 @@ public class Student {
     private String email;
     private String phoneNumber;
 
-    @Override
-    public String toString() {
-        return "Student{" +
-                "id='" + id + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", gender='" + gender + '\'' +
-                ", DoB=" + DoB +
-                ", email='" + email + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                '}';
-    }
-
     public Student(String id, String firstName, String lastName, String gender, String doB, String email, String phoneNumber) {
         this.id = id;
         this.firstName = firstName;
@@ -82,12 +69,16 @@ public class Student {
         this.phoneNumber = phoneNumber;
     }
 
-    public void print() {
-        System.out.println("Student ID: " + id);
-        System.out.println("Student Name: " + firstName + " " + lastName);
-        System.out.println("Gender: " + gender);
-        System.out.println("Date of Birth: " + DoB);
-        System.out.println("Email: " + email);
-        System.out.println("Phone Number: " + phoneNumber);
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id='" + id + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", gender='" + gender + '\'' +
+                ", DoB='" + DoB + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
     }
 }
