@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class SubjectList extends ArrayList<Subject> {
     public SubjectList() {
-
+        super();
     }
 
     Scanner sc = new Scanner(System.in);

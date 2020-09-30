@@ -63,7 +63,7 @@ public class GradeList extends ArrayList<Grade> {
         String stuID, subID, confirm;
         double lab, progressTest, finalExam;
         boolean t, confirmed;
-        int stuPos = -1, subPos = -1, gradePos = -1;
+        int stuPos, subPos, gradePos;
         do {
             System.out.print("Do you want to continue? (Y/N): ");
             confirm = sc.nextLine();
@@ -105,7 +105,6 @@ public class GradeList extends ArrayList<Grade> {
             } while (!t);
             System.out.println("Input Successfully!");
         }
-        if (!confirmed) return;
     }
 
     public void printStudentReport() {
@@ -125,8 +124,9 @@ public class GradeList extends ArrayList<Grade> {
                 System.out.println("No report can be supported!");
             } else {
                 System.out.println("Student ID: " + stuID.toUpperCase());
-                Student st = this.get(gradePos).getStu();
-                System.out.println("Student Name: " + st.getFirstName() + " " + st.getLastName());
+                Student student = this.get(gradePos).stu;
+                System.out.println("Student Name: " + student.getFirstName() + " " + student.getLastName());
+                System.out.printf("%20s %20s %20s %20s\n", "No", "Subject", "Average", "Status");
                 int count = 1;
 
                 for (int o = 0; o < this.size(); o++) {
@@ -139,12 +139,48 @@ public class GradeList extends ArrayList<Grade> {
                             System.out.printf("%20d %20s %20f %20s\n", count, this.get(o).getSub().getName(), this.get(o).average(), "Failed");
                             count++;
                         }
+                    }
+                }
+            }
+        }
+    }
+    public void printSubjectReport() {
+        String subID, confirm;
+        boolean confirmed;
+        do {
+            System.out.print("Do you want to continue? (Y/N)");
+            confirm = sc.nextLine();
+            confirmed = confirmation(confirm);
+        }while (confirm.equalsIgnoreCase("Y") !=true && confirm.equalsIgnoreCase("N"));
+        if (confirmed) {
+            System.out.print("Enter subject ID: ");
+            subID = sc.nextLine();
+            int gradePos = searchSub(subID);
+
+            if (gradePos<0) {
+                System.out.println("No Report For This Subject!");
+            } else {
+                System.out.println("Subject ID: "+ subID.toUpperCase());
+                Subject subject = this.get(gradePos).sub;
+                System.out.println("Subject name: " + subject.getName());
+                System.out.printf("%20s %20s %20s  %20s %20s\n", "No", "Student ID", "Student Name", "Average", "Status");
+                int count = 1;
+
+                for (int o = 0; o < this.size(); o++) {
+                    if (subID.equalsIgnoreCase(this.get(o).getSub().getId())) {
+                        if (this.get(o).average() > 5) {
+                            System.out.printf("%20d %20s %20s %20f %20s\n", count, this.get(o).getStu().getId(), this.get(o).getStu().getFirstName() + " " +this.get(o).getStu().getLastName(), this.get(o).average(), "Passed");
+                            count++;
+                        }
+                        if (this.get(o).average() <= 5) {
+                            System.out.printf("%20d %20s %20s %20f %20s\n", count, this.get(o).getStu().getId(), this.get(o).getStu().getFirstName() + " " +this.get(o).getStu().getLastName(), this.get(o).average(), "Failed");
+                            count++;
+                        }
 
                     }
                 }
             }
         }
     }
-
 
 }

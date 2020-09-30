@@ -36,6 +36,7 @@ public class Tester {
                 case 6 -> sub.removeSubject();
                 case 7 -> gra.addNewGrade();
                 case 8 -> gra.printStudentReport();
+                case 9 -> gra.printSubjectReport();
                 case 10 -> System.out.println("Thank you!");
                 default -> System.out.println("Try again!");
             }

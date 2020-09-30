@@ -1,8 +1,8 @@
 package DTO;
 
 public class Grade {
-    Student stu;
-    Subject sub;
+    public Student stu;
+    public Subject sub;
     double lab, progressTest, finalExam;
 
     public Grade(Student stu, Subject sub, double lab, double progressTest, double finalExam) {

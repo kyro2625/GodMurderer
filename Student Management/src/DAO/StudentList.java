@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class StudentList extends ArrayList<Student> {
     public StudentList() {
-
+        super();
     }
 
     Scanner sc = new Scanner(System.in);
