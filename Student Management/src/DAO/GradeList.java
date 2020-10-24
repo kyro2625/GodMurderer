@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class GradeList extends ArrayList<Grade> {
 
-    Scanner sc = new Scanner(System.in);
+    transient Scanner sc = new Scanner(System.in);
     StudentList StuList;
     SubjectList SubList;
 
@@ -96,7 +96,7 @@ public class GradeList extends ArrayList<Grade> {
                         double newLab = MyValidation.checkInputScore();
                         this.get(gradePos).setLab(newLab);
 
-                        double  oldProgressTest = this.get(gradePos).getProgressTest();
+                        double oldProgressTest = this.get(gradePos).getProgressTest();
                         System.out.print("Old progress test score: " + oldProgressTest + ", new progress test score: ");
                         double newProgressTest = MyValidation.checkInputScore();
                         this.get(gradePos).setProgressTest(newProgressTest);
@@ -145,8 +145,8 @@ public class GradeList extends ArrayList<Grade> {
             System.out.print("Enter student ID: ");
             stuID = sc.nextLine().toUpperCase();
             int gradePos = searchStudent(stuID);
-
-            if (gradePos < 0) {
+            if (this.size() == 0) System.out.println("No grade to display!");
+            else if (gradePos < 0) {
                 System.out.println("No report can be supported!");
             } else {
                 System.out.printf("\n%50s\n", "Student ID: " + stuID.toUpperCase());
@@ -187,23 +187,31 @@ public class GradeList extends ArrayList<Grade> {
             if (gradePos < 0) {
                 System.out.println("    No Report For This Subject!");
             } else {
-                System.out.printf("\n%50s\n", "Subject ID: " + subID.toUpperCase());
-                Subject subject = this.get(gradePos).sub;
-                System.out.printf("%50s\n", "Subject name: " + subject.getName());
-                System.out.printf("%20s %20s %20s  %20s %20s\n", "No", "Student ID", "Student Name", "Average", "Status");
-                int count = 1;
+                while (true) {
+                    try {
+                        System.out.printf("\n%50s\n", "Subject ID: " + subID.toUpperCase());
+                        Subject subject = this.get(gradePos).sub;
+                        System.out.printf("%50s\n", "Subject name: " + subject.getName());
+                        System.out.printf("%20s %20s %20s  %20s %20s\n", "No", "Student ID", "Student Name", "Average", "Status");
+                        int count = 1;
 
-                for (Grade grade : this) {
-                    if (subID.equalsIgnoreCase(grade.getSub().getId())) {
-                        if (grade.average() > 5) {
-                            System.out.printf("%20d %20s %20s %20f %20s\n", count, grade.getStu().getId(), grade.getStu().getFirstName() + " " + grade.getStu().getLastName(), grade.average(), "Passed");
-                            count++;
-                        }
-                        if (grade.average() <= 5) {
-                            System.out.printf("%20d %20s %20s %20f %20s\n", count, grade.getStu().getId(), grade.getStu().getFirstName() + " " + grade.getStu().getLastName(), grade.average(), "Failed");
-                            count++;
-                        }
+                        for (Grade grade : this) {
+                            if (subID.equalsIgnoreCase(grade.getSub().getId())) {
+                                if (grade.average() > 5) {
+                                    System.out.printf("%20d %20s %20s %20f %20s\n", count, grade.getStu().getId(), grade.getStu().getFirstName() + " " + grade.getStu().getLastName(), grade.average(), "Passed");
+                                    count++;
+                                }
+                                if (grade.average() <= 5) {
+                                    System.out.printf("%20d %20s %20s %20f %20s\n", count, grade.getStu().getId(), grade.getStu().getFirstName() + " " + grade.getStu().getLastName(), grade.average(), "Failed");
+                                    count++;
+                                }
 
+                            }
+                        }
+                        break;
+                    } catch (Exception e) {
+                        System.out.printf("%50s","No Student to report! ");
+                        return;
                     }
                 }
             }

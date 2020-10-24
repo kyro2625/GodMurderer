@@ -11,14 +11,14 @@ import java.util.Scanner;
 
 public class UserList {
     private ArrayList<User> list = new ArrayList<>();
-    private ArrayList<User> tempList = new ArrayList<>();
-    public UserList() {
-        super();
-    }
+
+//    public UserList() {
+//        super();
+//    }
+
     // create user account
     public void createAccount() {
         list = FileManagement.loadUser();
-        tempList = list;
         while (true) {
             String username;
             while (true) {
@@ -32,7 +32,6 @@ public class UserList {
                     break;
                 }
             }
-
             // enter password
             System.out.print("Enter password: ");
             String password = Validation.checkInputPass();
@@ -55,14 +54,14 @@ public class UserList {
             String phoneNumber = Validation.checkInputPhone();
             System.out.print("Enter email: ");
             String email = Validation.checkInputEmail();
-
             list.add(new User(username, enpassword, firstname, lastname, phoneNumber, email));
+            FileManagement.writeUser(list);
             System.out.println("Added");
             System.out.println("New data shoud be saved first!");
             System.out.print("Continue to create user account? (y/n)");
             if (!Validation.checkInputYN()) {
                 return;
-            } else FileManagement.writeUser(list);
+            }
             System.out.println();
         }
     }
@@ -94,28 +93,51 @@ public class UserList {
 
         // check if list is empty
         if (list.isEmpty()) {
-            System.out.println("Nothing to search");
+            System.err.println("The file is empty! Nothing to search");
             return;
         }
         while (true) {
-            System.out.print("Enter first name that you want to search: ");
-            String firstName = Validation.checkInputString();
+            int count = -1;
+            System.out.print("Enter a search string (a part of first name or last name) for search: ");
+            String searchString = Validation.checkInputString();
             for (User user : list) {
-                if (user.getFirstName().equalsIgnoreCase(firstName)) {
-                    System.out.println("User " + firstName + " is at " + list.indexOf(user) + " of the list.");
-                    System.out.print("User info: " + user);
-                    System.out.println();
-                    return;
-                } else {
-                    System.out.println("Can not find user");
-                    System.out.print("Do you want to continue search user? (y/n): ");
-                    if (!Validation.checkInputYN()) {
-                        return;
-                    } else break;
+                if (user.getFirstName().toLowerCase().contains(searchString.toLowerCase()) || user.getLastName().toLowerCase().contains(searchString.toLowerCase())) {
+                    count++;
                 }
+            }
+            if (count > -1) {
+                try {
+                    int result = count + 1;
+                    System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                    System.out.println("Search user with keyword " + searchString.toUpperCase() + " return " + result + " result(s)");
+                    System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                    System.out.printf("%5s  | %15s     | %70.65s     | %15s     | %15s     | %15s     | %20s     |\n", "No.", "USERNAME", "Encrypted Password (SHA-256)", "First Name", "Last Name", "Phone Number", "Email");
+                    System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+                    for (User user : list) {
+                        if (user.getFirstName().toLowerCase().contains(searchString.toLowerCase()) || user.getLastName().toLowerCase().contains(searchString.toLowerCase())) {
+                            System.out.printf("%5d  | %15s     | %70.65s     | %15s     | %15s     | %15s     | %20s     |\n", list.indexOf(user), user.getUsername(), user.getPassword(), user.getFirstName().toUpperCase(), user.getLastName().toUpperCase(), user.getPhone(), user.getEmail());
+                            // System.out.print("User info: " + user);
+                            //return;
+                        }
+                    }
+                } catch (Exception e) {
+                    System.out.println("Found error while loading file");
+                }
+            } else {
+                System.out.println("Can not find user with keyword " + searchString.toUpperCase() + "!");
+//                System.out.print("Do you want to continue search user? (y/n): ");
+//                if (!Validation.checkInputYN()) {
+//                    return;
+//                } else break;
+            }
+            System.out.print("Do you want to continue search user? (y/n): ");
+            if (!Validation.checkInputYN()) {
+                return;
             }
         }
     }
+
 
     // search user
     // update user
@@ -136,12 +158,12 @@ public class UserList {
             String enpassword = Validation.sha256(password);
             if (pos < 0 || Validation.checkPassExisted2(list, enpassword) < 0) {
                 System.out.println("Username is not existed or password is wrong!");
-                System.out.print(" Do you want to try again? (y/n): ");
-                if (!Validation.checkInputYN()) {
-                    return;
-                }
+//                System.out.print(" Do you want to try again? (y/n): ");
+//                if (!Validation.checkInputYN()) {
+//                    return;
+//                }
             }
-            if (pos >= 0) {
+            if (pos >= 0 && Validation.checkPassExisted2(list, enpassword) >-1) {
                 System.out.print("Enter new first name: ");
                 String firstname = sc.nextLine();
                 if (!firstname.isEmpty())
@@ -161,6 +183,7 @@ public class UserList {
                 if (mail != null) list.get(pos).setEmail(mail);
                 System.out.println("Update successful");
                 System.out.println("Update data should be saved!");
+                FileManagement.writeUser(list);
             }
             System.out.print("Continue to update a user? (y/n): ");
             confirmed = Validation.checkInputYN();
@@ -187,14 +210,15 @@ public class UserList {
             String enpassword = Validation.sha256(password);
             if (pos < 0 || Validation.checkPassExisted2(list, enpassword) < 0) {
                 System.out.println("Username is not existed or password is wrong!");
-                System.out.print("Do you want to try again? (y/n): ");
-                if (!Validation.checkInputYN()) {
-                    return;
-                }
+//                System.out.print("Do you want to try again? (y/n): ");
+//                if (!Validation.checkInputYN()) {
+//                    return;
+//                }
             } else {
                 // remove user
                 System.out.println("User " + list.get(pos).getUsername() + " has been removed!");
                 list.remove(pos);
+                FileManagement.writeUser(list);
             }
 
             System.out.print("Continue to remove a user? (y/n): ");
@@ -211,19 +235,30 @@ public class UserList {
             return;
         }
         FileManagement.writeUser(list);
-        System.out.println("Saved");
+        System.out.println("Saved!");
     }
 
     // print all list from file
     public void printFile() {
         int count = -1;
         list = FileManagement.loadUser();
-        Collections.sort(list, User.FirstNameComparator);
-        System.out.println("The list show in order: Username, Encrypted Password, First Name, Last Name, Phone Number, Email");
-        for (User user : list) {
-            count++;
-            System.out.print(count + ". ");
-            System.out.println(user);
+        if (list.isEmpty()) {
+            System.err.println("The file is empty, nothing to show!");
+            return;
+        }
+        try {
+            Collections.sort(list, User.FirstNameComparator);
+            // System.out.println("The list show in order: Username, Encrypted Password, First Name, Last Name, Phone Number, Email");
+            System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.printf("%5s  | %15s     | %70.65s     | %15s     | %15s     | %15s     | %20s     |\n", "No.", "USERNAME", "Encrypted Password (SHA-256)", "First Name", "Last Name", "Phone Number", "Email");
+            System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            for (User user : list) {
+                count++;
+                System.out.printf("%5d  | %15s     | %70.65s     | %15s     | %15s     | %15s     | %20s     |\n", count, user.getUsername(), user.getPassword(), user.getFirstName().toUpperCase(), user.getLastName().toUpperCase(), user.getPhone(), user.getEmail());
+            }
+            System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        } catch (Exception e) {
+            System.out.println("Found error while loading file");
         }
     }
 }

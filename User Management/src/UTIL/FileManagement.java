@@ -38,7 +38,7 @@ public class FileManagement {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("The file is not existed! Please save the data to file or create \"users.txt\" in project folder!");
+            System.out.println("Found error(s) while loading file!");
         } finally {
             try {
                 if (f != null)
@@ -53,7 +53,7 @@ public class FileManagement {
     // save to file
     public static void writeUser(ArrayList<User> list) {
         // check null list
-        if (list == null || list.isEmpty()) return;
+      //  if (list == null || list.isEmpty()) return;
 
         PrintWriter w = null;
 

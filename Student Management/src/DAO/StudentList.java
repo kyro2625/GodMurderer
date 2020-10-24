@@ -7,15 +7,12 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class StudentList extends ArrayList<Student> {
-    public StudentList() {
-        super();
-    }
 
-    Scanner sc = new Scanner(System.in);
-    ArrayList<Student> Stulist = new ArrayList<>();
+
+    transient Scanner sc = new Scanner(System.in);
 
     private boolean confirmation(String c) {
-        boolean t = true;
+        boolean t = true;   
         if (c.equalsIgnoreCase("N")) {
             t = false;
         }
@@ -94,7 +91,7 @@ public class StudentList extends ArrayList<Student> {
                 System.out.print("      Enter student phone number: ");
                 phoneNumber = MyValidation.checkPhoneNumber();
 
-                if (MyValidation.checkStudentExist(Stulist, id, lastName, firstName)) {
+                if (MyValidation.checkStudentExist(this, id, lastName, firstName)) {
                     this.add(new Student(id, firstName, lastName, gender, DoB, email, phoneNumber));
                     System.out.println("    Add new Student success!");
                     return;

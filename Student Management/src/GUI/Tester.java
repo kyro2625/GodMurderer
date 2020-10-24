@@ -5,7 +5,7 @@ import DAO.StudentList;
 import DAO.SubjectList;
 
 public class Tester {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         StudentList stu = new StudentList();
         SubjectList sub = new SubjectList();
         GradeList gra = new GradeList(stu, sub);

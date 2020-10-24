@@ -57,14 +57,4 @@ public class Grade {
         this.finalExam = finalExam;
     }
 
-    @Override
-    public String toString() {
-        return "Grade{" +
-                "stu=" + stu +
-                ", sub=" + sub +
-                ", lab=" + lab +
-                ", progressTest=" + progressTest +
-                ", finalExam=" + finalExam +
-                '}';
-    }
 }

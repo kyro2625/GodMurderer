@@ -35,12 +35,4 @@ public class Subject {
         this.credit = credit;
     }
 
-    @Override
-    public String toString() {
-        return "Subject{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", credit=" + credit +
-                '}';
-    }
 }

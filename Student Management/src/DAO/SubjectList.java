@@ -7,13 +7,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class SubjectList extends ArrayList<Subject> {
-    public SubjectList() {
-        super();
-    }
 
-    Scanner sc = new Scanner(System.in);
-    ArrayList<Subject> Sublist = new ArrayList<>();
-
+    transient Scanner sc = new Scanner(System.in);
     private boolean confirmation(String c) {
         boolean t = true;
         if (c.equalsIgnoreCase("N")) {
@@ -79,7 +74,7 @@ public class SubjectList extends ArrayList<Subject> {
                         System.out.println("    Wrong input format, please try again!");
                     }
                 }
-                if (MyValidation.checkSubjectExist(Sublist, id, name, credit)) {
+                if (MyValidation.checkSubjectExist(this, id, name, credit)) {
                     this.add(new Subject(id, name, credit));
                     System.out.println("    Add new Subject success!");
                     return;
